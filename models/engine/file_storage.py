@@ -33,15 +33,17 @@ class FileStorage:
                 f'{cls_name}.{obj_id}': obj
             })
 
-    def save(self):
+    def save(self, cls=None):
         """Serializes __objects to the JSON file"""
-        json_objects = {}
-        for key in self.__objects.keys():
-            json_objects.update({
-                key: self.__objects[key].to_dict()
-            })
-        with open(self.__file_path, 'w') as f:
-            json.dump(json_objects, f)
+        if cls is not None:
+            if type(cls) == str:
+                cls = eval(cls)
+            cls_dict = {}
+            for k, v in self.__objects.items():
+                if type(v) == cls:
+                    cls_dict[k] = v
+            return cls_dict
+        return self.__objects
 
     def reload(self):
         """Deserialize the JSON file to __objects"""
@@ -53,3 +55,7 @@ class FileStorage:
                     cls_name = key.split('.')[0]
                     my_obj = eval(cls_name)(**value)
                     self.new(my_obj)
+
+    def delete(self, obj=None):
+        if obj is not None:
+            del self.__objects[type(obj).__name__, obj.id]
