@@ -24,12 +24,10 @@ def c(text):
     return 'C %s' % text.replace('_', ' ')
 
 
+@app.route('/python', strict_slashes=False)
 @app.route('/python/<text>', strict_slashes=False)
-def python(text):
-    t = text.replace('_', ' ')
-    if t:
-        return 'Python %s' % (t or 'is cool')
-
+def python(text='is_cool'):
+    return 'C %s' % text.replace('_', ' ')
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000)
