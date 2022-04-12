@@ -32,7 +32,7 @@ def python(text='is_cool'):
 
 @app.route('/number/<int:n>', strict_slashes=False)
 def number(n):
-    return '%d is number' % n
+    return '%d is a number' % n
 
 
 if __name__ == '__main__':
